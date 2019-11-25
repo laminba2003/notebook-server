@@ -10,13 +10,14 @@ public class PythonScriptEngine extends ScriptEngine {
 
 	@Override
 	public Evaluation eval(File file) throws Exception {
+		Evaluation evaluation;
 		Process process = new ProcessBuilder("python", file.getAbsolutePath()).start();
-		String output = getLastLine(process.getErrorStream());
-		Evaluation evaluation = new Evaluation(output);
-		if(output.equals("")) {
+		String error = getLastLine(process.getErrorStream());
+		if(error.equals("")) {
 			evaluation = new Evaluation(getLastLine(process.getInputStream()));
 			evaluation.setFailed(false);
 		}else {
+			evaluation = new Evaluation(error);
 			evaluation.setFailed(true);
 		}
 		return evaluation;
