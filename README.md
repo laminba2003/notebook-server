@@ -10,5 +10,6 @@ Oracle Labs Spring Challenge
 
 ## Execution
 
-Run the _com.oracle.notebook.Application_ class as Java Application
+* Import the project as Maven project
+* Run the _com.oracle.notebook.Application_ class as Java Application
 
