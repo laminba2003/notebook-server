@@ -82,7 +82,7 @@ public class Interpreter {
 	@ExceptionHandler
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public Evaluation handleException(MethodArgumentNotValidException exception) {
-		return new Evaluation("the request format is invalid", true);
+		return new Evaluation("the request payload is invalid", true);
 	}
 
 	@ExceptionHandler
