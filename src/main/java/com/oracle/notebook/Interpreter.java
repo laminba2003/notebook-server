@@ -56,15 +56,14 @@ public class Interpreter {
 	}
 
 	public Evaluation interpret(Program program) throws Exception {
-		Evaluation evaluation;
 		ScriptEngine engine = new ScriptEngineManager().getEngineByName(program.getEngineName());
-		if (engine != null) {
-			File file = createTempFile(program);
-			evaluation = engine.eval(file);
-			file.delete();
-		} else {
-			evaluation = new Evaluation("engine not supported", true);
-		}
+		return engine != null ? eval(engine, program) : new Evaluation("engine not supported", true);
+	}
+	
+	private Evaluation eval(ScriptEngine engine, Program program) throws Exception {
+		File file = createTempFile(program);
+		Evaluation evaluation = engine.eval(file);
+		file.delete();
 		return evaluation;
 	}
 
