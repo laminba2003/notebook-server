@@ -22,7 +22,7 @@ public class Interpreter {
 			evaluation = engine.eval(file);
 		} else {
 			evaluation = new Evaluation();
-			evaluation.setResult("engine not found");
+			evaluation.setResult("engine not supported");
 		}
         return evaluation;
     }
