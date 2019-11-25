@@ -22,7 +22,7 @@ public class PythonScriptEngine extends ScriptEngine {
 		StringBuffer buffer = new StringBuffer();
 		String line;
 		while ((line = reader.readLine()) != null) {
-			buffer.append(line + " ");
+			buffer.append(line);
 		}
 		return buffer.toString();
 	}
