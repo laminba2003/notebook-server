@@ -7,6 +7,14 @@ public class Program {
 	@NotNull
 	private String code;
 	
+	public Program() {
+		
+	}
+	
+	public Program(String code) {
+		this.code = code;
+	}
+	
 	public String getCode() {
 		return code.substring(code.indexOf(" ")+1, code.length());
 	}

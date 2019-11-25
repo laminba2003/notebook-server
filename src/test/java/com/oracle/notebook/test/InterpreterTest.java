@@ -13,8 +13,7 @@ public class InterpreterTest {
 	@Test
 	public void test() throws Exception {
 		Interpreter interpreter = new Interpreter();
-		Program program = new Program();
-		program.setCode("%python print('hello world')");
+		Program program = new Program("%python print('hello world')");
 		Evaluation evaluation = interpreter.eval(program);
 		assertEquals("hello world", evaluation.getResult());
 	}
