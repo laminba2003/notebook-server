@@ -14,7 +14,7 @@ public class InterpreterTest {
 	public void test() throws Exception {
 		Interpreter interpreter = new Interpreter();
 		Program program = new Program("%python print('hello world')");
-		Evaluation evaluation = interpreter.eval(program);
+		Evaluation evaluation = interpreter.interpret(program);
 		assertEquals("hello world", evaluation.getResult());
 	}
 

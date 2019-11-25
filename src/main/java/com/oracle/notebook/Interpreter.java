@@ -20,15 +20,15 @@ public class Interpreter {
 
 	@RequestMapping(value = "/execute", method = RequestMethod.POST)
 	public Evaluation execute(@Valid @RequestBody Program program) throws Exception {
-		return eval(program);
+		return interpret(program);
 	}
 
 	@RequestMapping(value = "/execute/{sessionId}", method = RequestMethod.POST)
 	public Evaluation execute(@PathVariable String sessionId, @Valid @RequestBody Program program) throws Exception {
-		return eval(program);
+		return interpret(program);
 	}
 
-	public Evaluation eval(Program program) throws Exception {
+	public Evaluation interpret(Program program) throws Exception {
 		Evaluation evaluation;
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName(program.getEngineName());
