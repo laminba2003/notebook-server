@@ -67,7 +67,7 @@ public class Interpreter {
 		return evaluation;
 	}
 
-	public File createTempFile(Program program) throws IOException {
+	private File createTempFile(Program program) throws IOException {
 		File file = File.createTempFile("prog", ".tmp");
 		StringBuffer buffer = new StringBuffer();
 		for (Program previous : program.getPrograms()) {
