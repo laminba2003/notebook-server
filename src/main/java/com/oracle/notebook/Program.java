@@ -1,11 +1,14 @@
 package com.oracle.notebook;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 
 public class Program {
 
 	@NotNull
 	private String code;
+	private List<Program> programs = new ArrayList<Program>();
 	
 	public Program() {
 		
@@ -26,4 +29,13 @@ public class Program {
 	public String getEngineName() {
 		return code.substring(1, code.indexOf(" "));
 	}
+
+	public List<Program> getPrograms() {
+		return programs;
+	}
+
+	public void setPrograms(List<Program> programs) {
+		this.programs = programs;
+	}
+	
 }

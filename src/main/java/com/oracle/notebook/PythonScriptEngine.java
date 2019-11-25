@@ -11,20 +11,24 @@ public class PythonScriptEngine extends ScriptEngine {
 	@Override
 	public Evaluation eval(File file) throws Exception {
 		Process process = new ProcessBuilder("python", file.getAbsolutePath()).start();
-		String output = readAllLines(process.getInputStream());
-		output = output!=null ? output : readAllLines(process.getErrorStream()); 
+		String output = getLastLine(process.getErrorStream());
 		Evaluation evaluation = new Evaluation(output);
+		if(output.equals("")) {
+			evaluation = new Evaluation(getLastLine(process.getInputStream()));
+			evaluation.setFailed(false);
+		}else {
+			evaluation.setFailed(true);
+		}
 		return evaluation;
 	}
 	
-	protected String readAllLines(InputStream stream) throws IOException {
+	protected String getLastLine(InputStream stream) throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		StringBuffer buffer = new StringBuffer();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			buffer.append(line);
-		}
-		return buffer.toString();
+		String last = "", line = "";
+	    while ((line = reader.readLine()) != null) { 
+	        last = line;
+	    }
+		return last;
 	}
 
 }

@@ -15,6 +15,7 @@ public class PythonScriptEngineTest {
 		assertTrue(file.exists());
 		Evaluation evaluation = engine.eval(file);
 		assertEquals("hello world", evaluation.getResult());
+		assertEquals(false, evaluation.hasFailed());
 	}
 
 	

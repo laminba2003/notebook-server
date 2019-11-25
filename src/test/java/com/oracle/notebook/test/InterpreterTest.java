@@ -16,6 +16,7 @@ public class InterpreterTest {
 		Program program = new Program("%python print('hello world')");
 		Evaluation evaluation = interpreter.interpret(program);
 		assertEquals("hello world", evaluation.getResult());
+		assertEquals(false, evaluation.hasFailed());
 	}
 
 }
