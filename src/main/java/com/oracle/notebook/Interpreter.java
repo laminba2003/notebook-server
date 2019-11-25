@@ -20,6 +20,7 @@ public class Interpreter {
 		if(engine!=null) {
 			File file = createTempFile(program);
 			evaluation = engine.eval(file);
+			file.delete();
 		} else {
 			evaluation = new Evaluation();
 			evaluation.setResult("engine not supported");
