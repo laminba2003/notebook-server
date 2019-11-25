@@ -28,42 +28,42 @@ public class Interpreter {
 	public Evaluation execute(HttpSession session, @Valid @RequestBody Program program) throws Exception {
 		String key = program.getEngineName();
 		List<Program> programs = (List<Program>) session.getAttribute(key);
-		programs = programs!=null ? programs : new ArrayList<Program>();
+		programs = programs != null ? programs : new ArrayList<Program>();
 		program.setPrograms(programs);
 		Evaluation evaluation = interpret(program);
-		if(!evaluation.hasFailed()) {
+		if (!evaluation.hasFailed()) {
 			programs.add(program);
-			session.setAttribute(key,programs);
+			session.setAttribute(key, programs);
 		}
 		return evaluation;
 	}
 
 	@RequestMapping(value = "/execute/{sessionId}", method = RequestMethod.POST)
 	@SuppressWarnings("unchecked")
-	public synchronized Evaluation execute(HttpServletRequest request, @PathVariable String sessionId, @Valid @RequestBody Program program) throws Exception {
+	public synchronized Evaluation execute(HttpServletRequest request, @PathVariable String sessionId,
+			@Valid @RequestBody Program program) throws Exception {
 		ServletContext context = request.getServletContext();
-		String key = sessionId + "_" +program.getEngineName(); 
+		String key = sessionId + "_" + program.getEngineName();
 		List<Program> programs = (List<Program>) context.getAttribute(key);
-		programs = programs!=null ? programs : new ArrayList<Program>();
+		programs = programs != null ? programs : new ArrayList<Program>();
 		program.setPrograms(programs);
 		Evaluation evaluation = interpret(program);
-		if(!evaluation.hasFailed()) {
+		if (!evaluation.hasFailed()) {
 			programs.add(program);
-			context.setAttribute(key,programs);
+			context.setAttribute(key, programs);
 		}
 		return evaluation;
 	}
 
 	public Evaluation interpret(Program program) throws Exception {
 		Evaluation evaluation;
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine engine = manager.getEngineByName(program.getEngineName());
+		ScriptEngine engine = new ScriptEngineManager().getEngineByName(program.getEngineName());
 		if (engine != null) {
 			File file = createTempFile(program);
 			evaluation = engine.eval(file);
 			file.delete();
 		} else {
-			evaluation = new Evaluation("engine not supported");
+			evaluation = new Evaluation("engine not supported", true);
 		}
 		return evaluation;
 	}
@@ -71,8 +71,8 @@ public class Interpreter {
 	public File createTempFile(Program program) throws IOException {
 		File file = File.createTempFile("prog", ".tmp");
 		StringBuffer buffer = new StringBuffer();
-		for(Program previous : program.getPrograms()) {
-			buffer.append(previous.getCode()+"\r\n");
+		for (Program previous : program.getPrograms()) {
+			buffer.append(previous.getCode() + "\r\n");
 		}
 		buffer.append(program.getCode());
 		Files.write(Paths.get(file.getAbsolutePath()), buffer.toString().getBytes());
@@ -82,13 +82,13 @@ public class Interpreter {
 	@ExceptionHandler
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public Evaluation handleException(MethodArgumentNotValidException exception) {
-		return new Evaluation("the request format is invalid");
+		return new Evaluation("the request format is invalid", true);
 	}
 
 	@ExceptionHandler
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public Evaluation handleException(Exception exception) {
-		return new Evaluation("the code cannot be evaluated");
+		return new Evaluation("the code cannot be evaluated", true);
 	}
 
 }

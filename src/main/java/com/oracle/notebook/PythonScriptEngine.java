@@ -14,11 +14,9 @@ public class PythonScriptEngine extends ScriptEngine {
 		Process process = new ProcessBuilder("python", file.getAbsolutePath()).start();
 		String error = getLastLine(process.getErrorStream());
 		if(error.equals("")) {
-			evaluation = new Evaluation(getLastLine(process.getInputStream()));
-			evaluation.setFailed(false);
+			evaluation = new Evaluation(getLastLine(process.getInputStream()), false);
 		}else {
-			evaluation = new Evaluation(error);
-			evaluation.setFailed(true);
+			evaluation = new Evaluation(error, true);
 		}
 		return evaluation;
 	}

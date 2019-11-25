@@ -9,8 +9,9 @@ public class Evaluation {
 
 	}
 
-	public Evaluation(String result) {
+	public Evaluation(String result, boolean failed) {
 		this.result = result;
+		this.failed = failed;
 	}
 
 	public String getResult() {
