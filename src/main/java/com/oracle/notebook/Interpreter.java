@@ -19,29 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class Interpreter {
 
 	@RequestMapping(value = "/execute", method = RequestMethod.POST)
-	public Evaluation execute(@Valid @RequestBody Program program) {
+	public Evaluation execute(@Valid @RequestBody Program program) throws Exception {
 		return eval(program);
 	}
 
 	@RequestMapping(value = "/execute/{sessionId}", method = RequestMethod.POST)
-	public Evaluation execute(@PathVariable String sessionId, @Valid @RequestBody Program program) throws IOException {
+	public Evaluation execute(@PathVariable String sessionId, @Valid @RequestBody Program program) throws Exception {
 		return eval(program);
 	}
 
-	private Evaluation eval(Program program) {
+	private Evaluation eval(Program program) throws Exception {
 		Evaluation evaluation;
-		try {
-			ScriptEngineManager manager = new ScriptEngineManager();
-			ScriptEngine engine = manager.getEngineByName(program.getEngineName());
-			if (engine != null) {
-				File file = createTempFile(program);
-				evaluation = engine.eval(file);
-				file.delete();
-			} else {
-				evaluation = new Evaluation("engine not supported");
-			}
-		} catch (Exception e) {
-			evaluation = new Evaluation("the code cannot be evaluated");
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine engine = manager.getEngineByName(program.getEngineName());
+		if (engine != null) {
+			File file = createTempFile(program);
+			evaluation = engine.eval(file);
+			file.delete();
+		} else {
+			evaluation = new Evaluation("engine not supported");
 		}
 		return evaluation;
 	}
@@ -56,6 +52,12 @@ public class Interpreter {
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public Evaluation handleException(MethodArgumentNotValidException exception) {
 		return new Evaluation("the request format is invalid");
+	}
+
+	@ExceptionHandler
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public Evaluation handleException(Exception exception) {
+		return new Evaluation("the code cannot be evaluated");
 	}
 
 }
