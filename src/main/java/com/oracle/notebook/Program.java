@@ -1,7 +1,10 @@
 package com.oracle.notebook;
 
+import javax.validation.constraints.NotNull;
+
 public class Program {
 
+	@NotNull
 	private String code;
 	
 	public String getCode() {
