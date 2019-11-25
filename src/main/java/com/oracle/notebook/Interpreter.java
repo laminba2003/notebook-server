@@ -28,7 +28,7 @@ public class Interpreter {
 		return eval(program);
 	}
 
-	private Evaluation eval(Program program) throws Exception {
+	public Evaluation eval(Program program) throws Exception {
 		Evaluation evaluation;
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName(program.getEngineName());
