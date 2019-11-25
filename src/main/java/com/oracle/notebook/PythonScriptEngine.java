@@ -8,7 +8,6 @@ public class PythonScriptEngine extends ScriptEngine {
 
 	@Override
 	public Evaluation eval(File file) throws Exception {
-		Evaluation evaluation = new Evaluation();
 		Process process = new ProcessBuilder("python", file.getAbsolutePath()).start();
 		BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
 		BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
@@ -21,7 +20,7 @@ public class PythonScriptEngine extends ScriptEngine {
 			}
 			output = buffer.toString();
 		}
-		evaluation.setResult(output);
+		Evaluation evaluation = new Evaluation(output);
 		return evaluation;
 	}
 
