@@ -52,7 +52,7 @@ public class Interpreter {
 
 	@RequestMapping(value = "/execute/{sessionId}", method = RequestMethod.POST)
 	@SuppressWarnings("unchecked")
-	public Evaluation execute(HttpServletRequest request, @PathVariable String sessionId,
+	public synchronized Evaluation execute(HttpServletRequest request, @PathVariable String sessionId,
 			@Valid @RequestBody Program program, Locale locale) throws Exception {
 		ServletContext context = request.getServletContext();
 		String key = sessionId + "_" + program.getEngineName();
@@ -62,10 +62,8 @@ public class Interpreter {
 		Evaluation evaluation = interpret(program);
 		if (evaluation != null) {
 			if (!evaluation.hasFailed()) {
-				synchronized (this) {
-					programs.add(program);
-					context.setAttribute(key, programs);
-				}
+				programs.add(program);
+				context.setAttribute(key, programs);
 			}
 		} else {
 			String message = messageSource.getMessage("engine.notfound", null, locale);
