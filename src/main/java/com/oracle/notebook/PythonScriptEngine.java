@@ -15,11 +15,11 @@ public class PythonScriptEngine extends ScriptEngine {
 		process.waitFor(5, TimeUnit.SECONDS);
 		process.destroy();
 		if (process.exitValue() == 0) {
-			String error = getLastLine(process.getErrorStream());
-			return error.equals("") ? new Evaluation(getLastLine(process.getInputStream()), false)
-					: new Evaluation(error, true);
+			return new Evaluation(getLastLine(process.getInputStream()), false);
 		} else {
-			return new Evaluation("process aborted", true);
+			String error = getLastLine(process.getErrorStream());
+			error = !error.equals("") ? error : "process aborted";
+			return new Evaluation(error, true);
 		}
 	}
 
