@@ -40,7 +40,7 @@ public class Interpreter {
 
 	@RequestMapping(value = "/execute/{sessionId}", method = RequestMethod.POST)
 	@SuppressWarnings("unchecked")
-	public synchronized Evaluation execute(HttpServletRequest request, @PathVariable String sessionId,
+	public Evaluation execute(HttpServletRequest request, @PathVariable String sessionId,
 			@Valid @RequestBody Program program) throws Exception {
 		ServletContext context = request.getServletContext();
 		String key = sessionId + "_" + program.getEngineName();
@@ -49,8 +49,10 @@ public class Interpreter {
 		program.setPrograms(programs);
 		Evaluation evaluation = interpret(program);
 		if (!evaluation.hasFailed()) {
-			programs.add(program);
-			context.setAttribute(key, programs);
+			synchronized (this) {
+				programs.add(program);
+				context.setAttribute(key, programs);
+			}
 		}
 		return evaluation;
 	}
@@ -59,7 +61,7 @@ public class Interpreter {
 		ScriptEngine engine = new ScriptEngineManager().getEngineByName(program.getEngineName());
 		return engine != null ? eval(engine, program) : new Evaluation("engine not supported", true);
 	}
-	
+
 	private Evaluation eval(ScriptEngine engine, Program program) throws Exception {
 		File file = createTempFile(program);
 		Evaluation evaluation = engine.eval(file);
