@@ -8,12 +8,17 @@
 	<description>Oracle Labs Spring challenge</description>
 	<properties>
 		<spring.boot.version>2.2.1.RELEASE</spring.boot.version>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.12</junit.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${spring.boot.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 			<version>${spring.boot.version}</version>
 		</dependency>
 		<dependency>
