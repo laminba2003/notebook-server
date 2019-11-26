@@ -17,3 +17,22 @@ Interactive notebooks are experiencing a rise in popularity. Notebooks offer an 
 * Import the project as Maven project
 * Run the _com.oracle.notebook.Application_ class as Java Application
 
+## Usage
+
+with Postman, make a post request to the following endpoints with the code to be executed
+
+#### http://localhost:8080/execute
+
+```json
+ {
+  "code" : "%python print('hello world')"
+ }
+```
+
+#### http://localhost:8080/execute/{sessionId}
+
+```json
+ {
+  "code" : "%python print('hello world')"
+ }
+```
