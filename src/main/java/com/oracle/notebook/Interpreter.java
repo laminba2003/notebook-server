@@ -100,14 +100,14 @@ public class Interpreter {
 	@ExceptionHandler
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public Evaluation handleException(MethodArgumentNotValidException exception, Locale locale) {
-		String message = messageSource.getMessage("payload.invalid", null, locale);
+		String message = messageSource.getMessage("code.invalid", null, locale);
 		return new Evaluation(message, true);
 	}
 
 	@ExceptionHandler
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public Evaluation handleException(Exception exception, Locale locale) {
-		String message = messageSource.getMessage("code.invalid", null, locale);
+		String message = messageSource.getMessage("evaluation.failed", null, locale);
 		return new Evaluation(message, true);
 	}
 

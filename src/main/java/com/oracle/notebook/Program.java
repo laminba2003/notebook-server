@@ -3,10 +3,12 @@ package com.oracle.notebook;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class Program {
 
 	@NotNull
+	@Pattern(regexp="^(%)\\w+\\s\\w+[^$]+$") 
 	private String code;
 	private List<Program> programs = new ArrayList<Program>();
 	
