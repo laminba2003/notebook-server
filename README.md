@@ -8,7 +8,7 @@ Interactive notebooks are experiencing a rise in popularity. Notebooks offer an 
 
 ## Requirements
 
-* Java 7+
+* Java 8+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
 * Python installed on your computer
 
