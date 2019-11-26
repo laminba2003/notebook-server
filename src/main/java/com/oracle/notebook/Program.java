@@ -8,26 +8,26 @@ import javax.validation.constraints.Pattern;
 public class Program {
 
 	@NotNull
-	@Pattern(regexp="^(%)\\w+\\s\\w+[^$]+$") 
+	@Pattern(regexp = "^(%)\\w+\\s\\w+[^$]+$")
 	private String code;
 	private List<Program> programs = new ArrayList<Program>();
-	
+
 	public Program() {
-		
+
 	}
-	
+
 	public Program(String code) {
 		this.code = code;
 	}
-	
+
 	public String getCode() {
-		return code.substring(code.indexOf(" ")+1, code.length());
+		return code.substring(code.indexOf(" ") + 1, code.length());
 	}
 
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	public String getEngineName() {
 		return code.substring(1, code.indexOf(" "));
 	}
@@ -39,5 +39,5 @@ public class Program {
 	public void setPrograms(List<Program> programs) {
 		this.programs = programs;
 	}
-	
+
 }
