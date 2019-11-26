@@ -15,6 +15,7 @@ public class InterpreterTest {
 		Interpreter interpreter = new Interpreter();
 		Program program = new Program("%python print('hello world')");
 		Evaluation evaluation = interpreter.interpret(program);
+		assertNotNull(evaluation);
 		assertEquals("hello world", evaluation.getResult());
 		assertEquals(false, evaluation.hasFailed());
 	}
