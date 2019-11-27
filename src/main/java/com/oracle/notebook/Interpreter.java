@@ -35,7 +35,7 @@ public class Interpreter {
 			throws Exception {
 		String key = program.getEngineName();
 		List<Program> programs = (List<Program>) session.getAttribute(key);
-		programs = programs != null ? programs : new ArrayList<Program>();
+		programs = programs != null ? programs : new ArrayList<>();
 		program.setPrograms(programs);
 		Evaluation evaluation = interpret(program);
 		if (evaluation != null) {
@@ -57,7 +57,7 @@ public class Interpreter {
 		ServletContext context = request.getServletContext();
 		String key = sessionId + "_" + program.getEngineName();
 		List<Program> programs = (List<Program>) context.getAttribute(key);
-		programs = programs != null ? programs : new ArrayList<Program>();
+		programs = programs != null ? programs : new ArrayList<>();
 		program.setPrograms(programs);
 		Evaluation evaluation = interpret(program);
 		if (evaluation != null) {
