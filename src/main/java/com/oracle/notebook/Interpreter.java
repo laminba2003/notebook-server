@@ -104,7 +104,7 @@ public class Interpreter {
 
 	@ExceptionHandler
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public Evaluation handleException(Exception exception, Locale locale) {
+	public Evaluation handleException(EvaluationException exception, Locale locale) {
 		String message = messageSource.getMessage("evaluation.failed", null, locale);
 		return new Evaluation(message, true);
 	}
