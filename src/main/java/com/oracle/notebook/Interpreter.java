@@ -32,7 +32,7 @@ public class Interpreter {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/execute", method = RequestMethod.POST)
 	public Evaluation execute(HttpSession session, @Valid @RequestBody Program program, Locale locale)
-			throws Exception {
+			throws IOException, EvaluationException {
 		String key = program.getEngineName();
 		List<Program> programs = (List<Program>) session.getAttribute(key);
 		programs = programs != null ? programs : new ArrayList<>();
@@ -53,7 +53,7 @@ public class Interpreter {
 	@RequestMapping(value = "/execute/{sessionId}", method = RequestMethod.POST)
 	@SuppressWarnings("unchecked")
 	public synchronized Evaluation execute(HttpServletRequest request, @PathVariable String sessionId,
-			@Valid @RequestBody Program program, Locale locale) throws Exception {
+			@Valid @RequestBody Program program, Locale locale) throws IOException, EvaluationException {
 		ServletContext context = request.getServletContext();
 		String key = sessionId + "_" + program.getEngineName();
 		List<Program> programs = (List<Program>) context.getAttribute(key);
@@ -72,12 +72,12 @@ public class Interpreter {
 		return evaluation;
 	}
 
-	public Evaluation interpret(Program program) throws Exception {
+	public Evaluation interpret(Program program) throws IOException, EvaluationException {
 		ScriptEngine engine = new ScriptEngineManager().getEngineByName(program.getEngineName());
 		return engine != null ? eval(engine, program) : null;
 	}
 
-	private Evaluation eval(ScriptEngine engine, Program program) throws Exception {
+	private Evaluation eval(ScriptEngine engine, Program program) throws IOException, EvaluationException {
 		File file = createTempFile(program);
 		Evaluation evaluation = engine.eval(file);
 		file.delete();
@@ -104,7 +104,7 @@ public class Interpreter {
 
 	@ExceptionHandler
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public Evaluation handleException(EvaluationException exception, Locale locale) {
+	public Evaluation handleException(Exception exception, Locale locale) {
 		String message = messageSource.getMessage("evaluation.failed", null, locale);
 		return new Evaluation(message, true);
 	}
