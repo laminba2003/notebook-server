@@ -4,12 +4,13 @@ import static org.junit.Assert.*;
 import java.io.File;
 import org.junit.Test;
 import com.oracle.notebook.Evaluation;
+import com.oracle.notebook.EvaluationException;
 import com.oracle.notebook.PythonScriptEngine;
 
 public class PythonScriptEngineTest {
 
 	@Test
-	public void test() throws Exception {
+	public void test() throws EvaluationException {
 		PythonScriptEngine engine = new PythonScriptEngine();
 		File file = new File("src/test/resources/hello.py");
 		assertTrue(file.exists());
