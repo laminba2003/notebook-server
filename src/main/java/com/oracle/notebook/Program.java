@@ -1,6 +1,7 @@
 package com.oracle.notebook;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -11,7 +12,7 @@ public class Program implements Serializable {
 	@NotNull
 	@Pattern(regexp = "^(%)\\w+\\s\\w+[^$]+$")
 	private String code;
-	private transient List<Program> programs;
+	private transient List<Program> programs = new ArrayList<>();
 
 	public Program() {
 
