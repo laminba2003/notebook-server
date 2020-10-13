@@ -8,7 +8,7 @@
 	<description>Oracle Labs Spring challenge</description>
 	<properties>
 		<spring.boot.version>2.2.1.RELEASE</spring.boot.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 	</properties>
 	<dependencies>
 		<dependency>
