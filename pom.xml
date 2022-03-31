@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<description>Oracle Labs Spring challenge</description>
 	<properties>
-		<spring.boot.version>2.2.1.RELEASE</spring.boot.version>
+		<spring.boot.version>2.5.12</spring.boot.version>
 		<junit.version>4.12</junit.version>
 	</properties>
 	<dependencies>
